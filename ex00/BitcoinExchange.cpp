@@ -6,13 +6,13 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:47 by akuburas          #+#    #+#             */
-/*   Updated: 2024/10/30 19:11:12 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/10/31 10:06:56 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
 
-void BitcoinExchange::BitcoinExchange::run(const std::string &databaseFile)
+BitcoinExchange::BitcoinExchange(const std::string &databaseFile)
 {
 	loadDatabase(databaseFile);
 }
@@ -25,7 +25,7 @@ void BitcoinExchange::loadDatabase(const std::string &databaseFile)
 	std::string line;
 	while (std::getline(file, line))
 	{
-		std::isstringstream ss(line);
+		std::istringstream ss(line);
 		std::string date;
 		double price;
 		if (ss >> date >> price)
@@ -41,7 +41,7 @@ void BitcoinExchange::loadDatabase(const std::string &databaseFile)
 
 double BitcoinExchange::findClosestPrice(const std::string &date) const
 {
-	map<std::string, double>::const_iterator it = _database.lower_bound(date);
+	std::map<std::string, double>::const_iterator it = _database.lower_bound(date);
 	if (it == _database.end() || it->first != date)
 	{
 		if (it == _database.begin())
@@ -83,13 +83,15 @@ bool BitcoinExchange::isValueValid(const std::string &price) const
 
 void BitcoinExchange::processInput(const std::string &inputFile) const
 {
+	if (inputFile.empty())
+		throw std::runtime_error("Error: Invalid input file");
 	std::ifstream file(inputFile);
 	if (!file.is_open())
 		throw std::runtime_error("Error: Could not open file");
 	std::string line;
 	while (std::getline(file, line))
 	{
-		std::isstringstream ss(line);
+		std::istringstream ss(line);
 		std::string date;
 		std::string pipe;
 		std::string valueStr;

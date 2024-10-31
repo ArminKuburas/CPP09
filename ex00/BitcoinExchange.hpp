@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:49 by akuburas          #+#    #+#             */
-/*   Updated: 2024/10/30 18:59:14 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/10/31 09:59:12 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 class BitcoinExchange
 {
 	public:
-		run(const std::string &databaseFile);
+		BitcoinExchange(const std::string &databaseFile);
 		void processInput(const std::string &inputFile) const;
 	private:
 	std::map<std::string, double> _database;
