@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:49 by akuburas          #+#    #+#             */
-/*   Updated: 2024/10/31 09:59:12 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/10/31 10:43:05 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
+#include <iomanip>
 
 class BitcoinExchange
 {
@@ -27,6 +28,7 @@ class BitcoinExchange
 	private:
 	std::map<std::string, double> _database;
 	
+	void checkLine(const std::string &line) const;
 	void loadDatabase(const std::string &databaseFile);
 	double findClosestPrice(const std::string &date) const;
 	bool isDateValid(const std::string &date) const;

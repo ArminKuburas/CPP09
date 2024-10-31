@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:47 by akuburas          #+#    #+#             */
-/*   Updated: 2024/10/31 10:06:56 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/10/31 10:42:59 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,50 @@ void BitcoinExchange::loadDatabase(const std::string &databaseFile)
 	if (!file.is_open())
 		throw std::runtime_error("Error: Could not open file");
 	std::string line;
+	std::getline(file, line);
+	if (line != "date,exchange_rate")
+		throw std::runtime_error("Error: Invalid database format");
 	while (std::getline(file, line))
 	{
-		std::istringstream ss(line);
-		std::string date;
-		double price;
-		if (ss >> date >> price)
+		std::cout << line << std::endl;
+		BitcoinExchange::checkLine(line);
+		std::string date = line.substr(0, 10);
+		std::cout << date << std::endl;
+		double price = std::stod(line.substr(11));
+		std::cout << std::setprecision(15) << price << std::endl;
+		_database[date] = price;
+	}
+}
+
+void BitcoinExchange::checkLine(const std::string &line) const
+{
+	size_t date_size = 10;
+	bool dot_switch = false;
+	
+	for (size_t i = 0; i < line.size(); i++)
+	{
+		if (i == date_size)
 		{
-			_database[date] = price;
+			if (line[i] != ',')
+				throw std::runtime_error("Error: Invalid database format 1");
+			continue;
 		}
-		else
+		if (i == 4 || i == 7)
 		{
-			throw std::runtime_error("Error: Invalid database format");
+			if (line[i] != '-')
+				throw std::runtime_error("Error: Invalid database format 2");
+			continue;
+		}
+		std::cout << line[i] << std::endl;
+		if (i < date_size && (line[i] < '0' || line[i] > '9'))
+			throw std::runtime_error("Error: Invalid database format 3");
+		if (i > date_size && (line[i] < '0' || line[i] > '9') && line[i] != '.') 
+			throw std::runtime_error("Error: Invalid database format 4");
+		if (line[i] == '.') 
+		{
+			if (dot_switch)
+				throw std::runtime_error("Error: Invalid database format 5");
+			dot_switch = true;
 		}
 	}
 }
