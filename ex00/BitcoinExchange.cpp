@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:47 by akuburas          #+#    #+#             */
-/*   Updated: 2024/10/31 10:42:59 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/11/01 09:52:59 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,9 @@ void BitcoinExchange::loadDatabase(const std::string &databaseFile)
 		throw std::runtime_error("Error: Invalid database format");
 	while (std::getline(file, line))
 	{
-		std::cout << line << std::endl;
 		BitcoinExchange::checkLine(line);
 		std::string date = line.substr(0, 10);
-		std::cout << date << std::endl;
 		double price = std::stod(line.substr(11));
-		std::cout << std::setprecision(15) << price << std::endl;
 		_database[date] = price;
 	}
 }
@@ -48,24 +45,23 @@ void BitcoinExchange::checkLine(const std::string &line) const
 		if (i == date_size)
 		{
 			if (line[i] != ',')
-				throw std::runtime_error("Error: Invalid database format 1");
+				throw std::runtime_error("Error: Invalid database format");
 			continue;
 		}
 		if (i == 4 || i == 7)
 		{
 			if (line[i] != '-')
-				throw std::runtime_error("Error: Invalid database format 2");
+				throw std::runtime_error("Error: Invalid database format");
 			continue;
 		}
-		std::cout << line[i] << std::endl;
 		if (i < date_size && (line[i] < '0' || line[i] > '9'))
-			throw std::runtime_error("Error: Invalid database format 3");
+			throw std::runtime_error("Error: Invalid database format");
 		if (i > date_size && (line[i] < '0' || line[i] > '9') && line[i] != '.') 
-			throw std::runtime_error("Error: Invalid database format 4");
+			throw std::runtime_error("Error: Invalid database format");
 		if (line[i] == '.') 
 		{
 			if (dot_switch)
-				throw std::runtime_error("Error: Invalid database format 5");
+				throw std::runtime_error("Error: Invalid database format");
 			dot_switch = true;
 		}
 	}
@@ -96,17 +92,38 @@ bool BitcoinExchange::isDateValid(const std::string &date) const
 		if (date[i] < '0' || date[i] > '9')
 			return (false);
 	}
-	return (true);
+	std::tm tm = {};
+	std::istringstream ss(date);
+	ss >> std::get_time(&tm, "%Y-%m-%d");
+	if (ss.fail())
+		return (false);
+	tm.tm_isdst = -1;
+	std::time_t t = std::mktime(&tm);
+	if (t == -1)
+		return (false);
+	std::tm *normalized = std::localtime(&t);
+	bool result = normalized->tm_year + 1900 == tm.tm_year &&
+		normalized->tm_mon + 1 == tm.tm_mon + 1 &&
+		normalized->tm_mday == tm.tm_mday;
+	return (!result);
 }
 
 bool BitcoinExchange::isValueValid(const std::string &price) const
 {
 	if (price.empty())
 		return (false);
+	bool dot_switch = false;
 	for (size_t i = 0; i < price.size(); i++)
 	{
 		if (i == 0 && price[i] == '-')
 			continue;
+		if (price[i] == '.')
+		{
+			if (dot_switch)
+				return (false);
+			dot_switch = true;
+			continue;
+		}
 		if (price[i] < '0' || price[i] > '9')
 			return (false);
 	}
@@ -116,11 +133,14 @@ bool BitcoinExchange::isValueValid(const std::string &price) const
 void BitcoinExchange::processInput(const std::string &inputFile) const
 {
 	if (inputFile.empty())
-		throw std::runtime_error("Error: Invalid input file");
+		throw std::runtime_error("Error: Could not open file");
 	std::ifstream file(inputFile);
 	if (!file.is_open())
 		throw std::runtime_error("Error: Could not open file");
 	std::string line;
+	std::getline(file, line);
+	if (line != "date | value")
+		throw std::runtime_error("Error: Invalid input format");
 	while (std::getline(file, line))
 	{
 		std::istringstream ss(line);
@@ -134,18 +154,27 @@ void BitcoinExchange::processInput(const std::string &inputFile) const
 		}
 		if (!isDateValid(date))
 		{
-			std::cerr << "Error: bad input => " << date << std::endl;
+			std::cerr << "Error: bad date input => " << date << std::endl;
 			continue;
 		}
 		if (!isValueValid(valueStr))
 		{
-			std::cerr << "Error: bad input => " << valueStr << std::endl;
+			std::cerr << "Error: bad value input => " << valueStr << std::endl;
 			continue;
 		}
 		double value = std::stod(valueStr);
+		if (value < 0)
+		{
+			std::cerr << "Error: not a positive number" << std::endl;
+			continue;
+		}
+		if (value > std::numeric_limits<int>::max())
+		{
+			std::cerr << "Error: too large a number" << std::endl;
+			continue;
+		}
 		double closestPrice = findClosestPrice(date);
 		double result = value * closestPrice;
-		std::cout << date << " => " << value << " = " << result << std::endl;
+		std::cout << std::setprecision(8) << date << " => " << value << " = " << result << std::endl;
 	}
-	
 }
