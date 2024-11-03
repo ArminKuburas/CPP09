@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 11:51:15 by akuburas          #+#    #+#             */
-/*   Updated: 2024/11/03 11:51:16 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/11/03 12:02:34 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int RPNCalculator::calculate(const std::string &expression)
 			}
 			stack.push(result);
 		}
+		else if (token[0] == '(')
+			throw std::runtime_error("Error");
 		else
 			throw std::runtime_error("Error: invalid token");
 	}
