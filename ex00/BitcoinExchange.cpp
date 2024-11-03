@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:47 by akuburas          #+#    #+#             */
-/*   Updated: 2024/11/03 11:50:03 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/11/03 12:09:29 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,13 +187,18 @@ BitcoinExchange::~BitcoinExchange()
 {
 }
 
+std::map<std::string, double> BitcoinExchange::getDatabase() const
+{
+	return (_database);
+}
+
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &other)
 {
-	(void)other;
+	this->_database = other.getDatabase();
 }
 
 BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other)
 {
-	(void)other;
+	this->_database = other.getDatabase();
 	return (*this);
 }
