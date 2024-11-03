@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:47 by akuburas          #+#    #+#             */
-/*   Updated: 2024/11/01 09:52:59 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/11/03 11:50:03 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,4 +177,23 @@ void BitcoinExchange::processInput(const std::string &inputFile) const
 		double result = value * closestPrice;
 		std::cout << std::setprecision(8) << date << " => " << value << " = " << result << std::endl;
 	}
+}
+
+BitcoinExchange::BitcoinExchange()
+{
+}
+
+BitcoinExchange::~BitcoinExchange()
+{
+}
+
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &other)
+{
+	(void)other;
+}
+
+BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other)
+{
+	(void)other;
+	return (*this);
 }
