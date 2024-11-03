@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 10:30:24 by akuburas          #+#    #+#             */
-/*   Updated: 2024/11/01 10:33:59 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/11/03 11:52:52 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,4 @@ class RPNCalculator
 		RPNCalculator(const RPNCalculator &other);
 		RPNCalculator &operator=(const RPNCalculator &other);
 		
-}
+};
