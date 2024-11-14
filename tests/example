@@ -1,0 +1,69 @@
+Before: 5 3 2 1 4 6 7 8 9 10 
+inside mergeInsertSort
+given vector is: 5 3 2 1 4 6 7 8 9 10 
+larger: 5 2 6 8 10 
+smaller: 3 1 4 7 9 
+here are the pairs
+5 3
+2 1
+6 4
+8 7
+10 9
+inside mergeInsertSort
+given vector is: 5 2 6 8 10 
+larger: 5 8 10 
+smaller: 2 6 
+here are the pairs
+5 2
+8 6
+10 
+inside mergeInsertSort
+given vector is: 5 8 10 
+larger: 8 10 
+smaller: 5 
+here are the pairs
+8 5
+10 
+inside mergeInsertSort
+given vector is: 8 10 
+larger: 10 
+smaller: 8 
+here are the pairs
+10 8
+inside for loop
+larger vector is: 10 
+smaller vector is: 8 
+larger vector after binaryInsert is: 8 10 
+inside for loop
+larger vector is: 8 10 
+smaller vector is: 5 
+larger vector after binaryInsert is: 5 8 10 
+inside for loop
+larger vector is: 5 8 10 
+smaller vector is: 2 6 
+larger vector after binaryInsert is: 2 5 8 10 
+inside for loop
+larger vector is: 2 5 8 10 
+smaller vector is: 2 6 
+larger vector after binaryInsert is: 2 5 6 8 10 
+inside for loop
+larger vector is: 2 5 6 8 10 
+smaller vector is: 3 1 4 7 9 
+larger vector after binaryInsert is: 2 3 5 6 8 10 
+inside for loop
+larger vector is: 2 3 5 6 8 10 
+smaller vector is: 3 1 4 7 9 
+larger vector after binaryInsert is: 1 2 3 5 6 8 10 
+inside for loop
+larger vector is: 1 2 3 5 6 8 10 
+smaller vector is: 3 1 4 7 9 
+larger vector after binaryInsert is: 1 2 3 4 5 6 8 10 
+inside for loop
+larger vector is: 1 2 3 4 5 6 8 10 
+smaller vector is: 3 1 4 7 9 
+larger vector after binaryInsert is: 1 2 3 4 5 6 7 8 10 
+inside for loop
+larger vector is: 1 2 3 4 5 6 7 8 10 
+smaller vector is: 3 1 4 7 9 
+larger vector after binaryInsert is: 1 2 3 4 5 6 7 8 9 10 
+After: 1 2 3 4 5 6 7 8 9 10 
