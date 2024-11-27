@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 11:20:11 by akuburas          #+#    #+#             */
-/*   Updated: 2024/11/14 11:52:08 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:31:57 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void mergeInsertSort(std::vector<int>& arr)
 
 int main()
 {
-	std::vector<int> arr = { 5, 3, 2, 1, 4, 6, 7, 8, 9, 10 };
+	std::vector<int> arr = { 5, 3, 2, 1, 4, 6, 7, 8, 9, 10, 0 };
 	std::cout << "Before: ";
 	for (int num : arr)
 	{
