@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:09:29 by akuburas          #+#    #+#             */
-/*   Updated: 2024/11/04 22:13:13 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/12/09 12:52:52 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,9 @@ class MergeInsert
 
 		VectorAlgorithm(std::string original_string);
 		DequeAlgorithm(std::string original_string);	
+	private:
+		vector<int> _original_vector;
+		deque<int> _original_deque;
+		vector<int> _sorted_vector;
+		deque<int> _sorted_deque;
 }
