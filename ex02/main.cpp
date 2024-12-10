@@ -6,16 +6,13 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 12:36:31 by akuburas          #+#    #+#             */
-/*   Updated: 2024/12/10 14:07:32 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:42:06 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "PmergeMe.hpp"
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <deque>
+#include "PmergeMe.hpp"
 #include <climits>
+#include <set>
 
 bool validate_individual_argument(std::string input)
 {
@@ -52,11 +49,29 @@ bool validate_input(int argc, char **argv)
 			return (false);
 		numbers.push_back(strtol(input.c_str(), NULL, 10));
 	}
+	std::set<long> unique_numbers(numbers.begin(), numbers.end());
+	if (unique_numbers.size() != numbers.size())
+	{
+		std::cerr << "Invalid Input: non-unique numbers found" << std::endl;
+		return (false);
+	}
 	return (true);
+}
+
+std::string argv_to_string(int argc, char **argv)
+{
+	std::string return_string = argv[1];
+	for (int i = 2; i < argc; i++)
+	{
+		return_string = return_string + " ";
+		return_string = return_string + argv[i];
+	}
+	std::cout << "This is the string " << return_string << std::endl; 
 }
 
 int main(int argc, char **argv)
 {
+	MergeInsert sorter;
 	if (argc < 3)
 	{
 		std::cerr << "Usage: ./PmergeMe [unique_number] [unique_number] [unique_number]" << std::endl;
@@ -64,6 +79,9 @@ int main(int argc, char **argv)
 	}
 	if (validate_input(argc, argv) == false)
 		return (1);
+	clock_t start_vec = clock();
+	sorter.VectorAlgorithm(argv_to_string(argc, argv));
+	
 	
 	return (0);
 }
