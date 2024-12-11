@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:09:29 by akuburas          #+#    #+#             */
-/*   Updated: 2024/12/11 19:01:46 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/12/11 20:50:35 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <algorithm>
 #include <deque>
 #include <cmath>
+
+using vec_iter = std::vector<int>::iterator;
 
 class MergeInsert
 {
@@ -30,11 +32,20 @@ class MergeInsert
 		void DequeAlgorithm(std::string original_string);	
 	private:
 		std::vector<int> _vector;
-		std::deque<int> _original_deque;
-		std::deque<int> _sorted_deque;
-		std::vector<int>::iterator VecFindNextIterator(std::vector<int>::iterator it, int steps);
+		std::deque<int> _deque;
 		void VectorRecursive(int pair_size);
-		void VecSwapPair(std::vector<int>::iterator start, vector<int>::iterator end, int pair_size);
-		void VecChainingTime(std::vector<std::vector<int>::iterator> & main_chain, std::vector<std::vector<int>::iterator> & pending_insertion_chain, int pair_size, int pair_amount);
+		void VecSwapPair(vec_iter start, vec_iter end, int pair_size);
+		void VecChainingTime(std::vector<vec_iter> & main_chain, std::vector<vec_iter> & pending_insertion_chain, int pair_size, int pair_amount);
 		int JacobsthalNumber(int n);
 };
+
+template <typename T> bool _compare(T a, T b)
+{
+	return (*a < *b);
+}
+
+template <typename T> T FindNext(T it, int amount_of_jumps)
+{
+	std::advance(it, amount_of_jumps);
+	return (it);
+}
