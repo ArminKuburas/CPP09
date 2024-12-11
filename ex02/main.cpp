@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 12:36:31 by akuburas          #+#    #+#             */
-/*   Updated: 2024/12/11 12:22:15 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/12/12 01:28:11 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ std::string argv_to_string(int argc, char **argv)
 		return_string = return_string + " ";
 		return_string = return_string + argv[i];
 	}
-	std::cout << "This is the string " << return_string << std::endl; 
 	return (return_string);
 }
 
@@ -82,10 +81,20 @@ int main(int argc, char **argv)
 	if (validate_input(argc, argv) == false)
 		return (1);
 	clock_t vec_start = clock();
-	sorter.VectorAlgorithm(argv_to_string(argc, argv));
+	std::vector<int> sorted_vec = sorter.VectorAlgorithm(argv_to_string(argc, argv));
 	clock_t vec_end = clock();
 	double elapsed_vec = static_cast<double>(vec_end - vec_start) / CLOCKS_PER_SEC;
-	std::cout << "VectorAlgorithm took " << std::fixed << std::setprecision(6) << elapsed_vec << " seconds" << std::endl;	
+	std::cout << "Before: " << argv_to_string(argc, argv) << std::endl;
+	std::cout << "After: " << vector_to_string(sorted_vec) << std::endl;
+	std::cout << "VectorAlgorithm took " << std::fixed << std::setprecision(6) << elapsed_vec << " seconds" << std::endl;
+	
+	clock_t deq_start = clock();
+	std::deque<int> sorted_deq = sorter.DequeAlgorithm(argv_to_string(argc, argv));
+	clock_t deq_end = clock();
+	double elapsed_deq = static_cast<double>(deq_end - deq_start) / CLOCKS_PER_SEC;
+	std::cout << "Before: " << argv_to_string(argc, argv) << std::endl;
+	std::cout << "After: " << deque_to_string(sorted_deq) << std::endl;
+	std::cout << "DequeAlgorithm took " << std::fixed << std::setprecision(6) << elapsed_deq << " seconds" << std::endl;
 	
 	return (0);
 }
