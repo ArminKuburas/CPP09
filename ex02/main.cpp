@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 12:36:31 by akuburas          #+#    #+#             */
-/*   Updated: 2024/12/12 01:28:11 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:32:13 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,28 @@ bool validate_individual_argument(std::string input)
 	return (true);
 }
 
-bool validate_input(int argc, char **argv)
+bool validate_input_vec(int argc, char **argv)
 {
 	std::vector<long> numbers;
+	for (int i = 1; i < argc; i++)
+	{
+		std::string input = argv[i];
+		if (validate_individual_argument(input) == false)
+			return (false);
+		numbers.push_back(strtol(input.c_str(), NULL, 10));
+	}
+	std::set<long> unique_numbers(numbers.begin(), numbers.end());
+	if (unique_numbers.size() != numbers.size())
+	{
+		std::cerr << "Invalid Input: non-unique numbers found" << std::endl;
+		return (false);
+	}
+	return (true);
+}
+
+bool validate_input_deq(int argc, char **argv)
+{
+	std::deque<long> numbers;
 	for (int i = 1; i < argc; i++)
 	{
 		std::string input = argv[i];
@@ -78,23 +97,23 @@ int main(int argc, char **argv)
 		std::cerr << "Usage: ./PmergeMe [unique_number] [unique_number] [unique_number]" << std::endl;
 		return (1);
 	}
-	if (validate_input(argc, argv) == false)
-		return (1);
 	clock_t vec_start = clock();
+	if (validate_input_vec(argc, argv) == false)
+		return (1);
 	std::vector<int> sorted_vec = sorter.VectorAlgorithm(argv_to_string(argc, argv));
 	clock_t vec_end = clock();
 	double elapsed_vec = static_cast<double>(vec_end - vec_start) / CLOCKS_PER_SEC;
-	std::cout << "Before: " << argv_to_string(argc, argv) << std::endl;
-	std::cout << "After: " << vector_to_string(sorted_vec) << std::endl;
-	std::cout << "VectorAlgorithm took " << std::fixed << std::setprecision(6) << elapsed_vec << " seconds" << std::endl;
-	
+
 	clock_t deq_start = clock();
+	if (validate_input_deq(argc, argv) == false)
+		return (1);
 	std::deque<int> sorted_deq = sorter.DequeAlgorithm(argv_to_string(argc, argv));
 	clock_t deq_end = clock();
 	double elapsed_deq = static_cast<double>(deq_end - deq_start) / CLOCKS_PER_SEC;
 	std::cout << "Before: " << argv_to_string(argc, argv) << std::endl;
-	std::cout << "After: " << deque_to_string(sorted_deq) << std::endl;
-	std::cout << "DequeAlgorithm took " << std::fixed << std::setprecision(6) << elapsed_deq << " seconds" << std::endl;
+	std::cout << "After: " << vector_to_string(sorted_vec) << std::endl;
+	std::cout << "VectorAlgorithm (Which users the std::vector container) took " << std::fixed << std::setprecision(6) << elapsed_vec << " seconds" << std::endl;
+	std::cout << "DequeAlgorithm (Which uses the std::deque container) took " << std::fixed << std::setprecision(6) << elapsed_deq << " seconds" << std::endl;
 	
 	return (0);
 }
