@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:47 by akuburas          #+#    #+#             */
-/*   Updated: 2024/11/03 12:09:29 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/12/19 14:23:49 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,8 @@ bool BitcoinExchange::isValueValid(const std::string &price) const
 
 void BitcoinExchange::processInput(const std::string &inputFile) const
 {
+	if (_database.empty())
+		throw std::runtime_error("Error: Database is empty");
 	if (inputFile.empty())
 		throw std::runtime_error("Error: Could not open file");
 	std::ifstream file(inputFile);
@@ -201,4 +203,9 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other)
 {
 	this->_database = other.getDatabase();
 	return (*this);
+}
+
+BitcoinExchange::setDatabase(const std::string &databaseFile)
+{
+	loadDatabase(databaseFile);
 }
