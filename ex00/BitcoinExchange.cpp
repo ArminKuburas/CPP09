@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:47 by akuburas          #+#    #+#             */
-/*   Updated: 2024/12/19 14:23:49 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/01/14 16:07:49 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,12 @@ bool BitcoinExchange::isDateValid(const std::string &date) const
 	ss >> std::get_time(&tm, "%Y-%m-%d");
 	if (ss.fail())
 		return (false);
+	if (tm.tm_mon == 1 && tm.tm_mday == 29)
+    {
+		int year = tm.tm_year + 1900;
+		if ((year % 4 != 0) || (year % 100 == 0 && year % 400 != 0))
+			return false;
+    }
 	tm.tm_isdst = -1;
 	std::time_t t = std::mktime(&tm);
 	if (t == -1)
@@ -205,7 +211,7 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other)
 	return (*this);
 }
 
-BitcoinExchange::setDatabase(const std::string &databaseFile)
+void BitcoinExchange::setDatabase(const std::string &databaseFile)
 {
 	loadDatabase(databaseFile);
 }
