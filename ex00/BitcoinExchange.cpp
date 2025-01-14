@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:47 by akuburas          #+#    #+#             */
-/*   Updated: 2025/01/14 16:07:49 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/01/14 16:26:17 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,12 +173,12 @@ void BitcoinExchange::processInput(const std::string &inputFile) const
 		double value = std::stod(valueStr);
 		if (value < 0)
 		{
-			std::cerr << "Error: not a positive number" << std::endl;
+			std::cerr << "Error: not a positive number." << std::endl;
 			continue;
 		}
 		if (value > std::numeric_limits<int>::max())
 		{
-			std::cerr << "Error: too large a number" << std::endl;
+			std::cerr << "Error: too large a number." << std::endl;
 			continue;
 		}
 		double closestPrice = findClosestPrice(date);
