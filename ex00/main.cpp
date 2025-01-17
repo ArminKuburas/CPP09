@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:52 by akuburas          #+#    #+#             */
-/*   Updated: 2024/10/31 10:43:28 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/01/15 13:04:00 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int argc, char **argv)
 {
 	if (argc != 2)
 	{
-		std::cerr << "Error: could not open file" << std::endl;
+		std::cerr << "Error: could not open file." << std::endl;
 		return (1);
 	}
 	try
