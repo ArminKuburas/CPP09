@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 11:51:15 by akuburas          #+#    #+#             */
-/*   Updated: 2024/11/03 12:02:34 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/01/20 14:57:48 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ int RPNCalculator::calculate(const std::string &expression)
 
 	while (iss >> token)
 	{
-		if (isdigit(token[0]) || (token.size() > 1 && token[0] == '-' && isdigit(token[1])))
-			stack.push(std::stoi(token));
-		else if (token == "+" || token == "-" || token == "*" || token == "/")
+		if (token == "+" || token == "-" || token == "*" || token == "/")
 		{
 			if (stack.size() < 2)
 				throw std::runtime_error("Error: insufficient operands for operation");
@@ -45,6 +43,22 @@ int RPNCalculator::calculate(const std::string &expression)
 				result = b / a;
 			}
 			stack.push(result);
+		}
+		else if (isdigit(token[0]) || (token.size() > 1 && token[0] == '-' && isdigit(token[1])))
+		{
+			bool isValid = true;
+			for (size_t i = 1; i < token.size(); i++)
+			{
+				if (!isdigit(token[i]))
+				{
+					isValid = false;
+					break;
+				}
+			}
+			if (isValid)
+				stack.push(std::stoi(token));
+			else
+				throw std::runtime_error("Error: invalid token");
 		}
 		else if (token[0] == '(')
 			throw std::runtime_error("Error");
