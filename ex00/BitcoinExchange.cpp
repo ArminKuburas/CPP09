@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:47 by akuburas          #+#    #+#             */
-/*   Updated: 2025/01/20 13:56:37 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/01/20 14:42:11 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ void BitcoinExchange::loadDatabase(const std::string &databaseFile)
 		if (!isDateValid(date))
 			throw std::runtime_error("Error: Invalid database format");
 		double price = std::stod(line.substr(11));
+		if (price < 0)
+		{
+			throw std::runtime_error("Error: Invalid database format");
+		}
+		if (price > std::numeric_limits<int>::max())
+		{
+			throw std::runtime_error("Error: Invalid database format");
+		}
 		_database[date] = price;
 	}
 }
