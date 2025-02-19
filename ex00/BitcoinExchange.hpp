@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:49 by akuburas          #+#    #+#             */
-/*   Updated: 2024/12/19 14:23:32 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:17:39 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ class BitcoinExchange
 		void setDatabase(const std::string &databaseFile);
 		
 	private:
-	std::map<std::string, double> _database;
+		std::map<std::string, double> _database;
 	
-	void checkLine(const std::string &line) const;
-	void loadDatabase(const std::string &databaseFile);
-	double findClosestPrice(const std::string &date) const;
-	bool isDateValid(const std::string &date) const;
-	bool isValueValid(const std::string &price) const;
+		void checkLine(const std::string &line) const;
+		void loadDatabase(const std::string &databaseFile);
+		double findClosestPrice(const std::string &date) const;
+		bool isDateValid(const std::string &date) const;
+		bool isValueValid(const std::string &price) const;
 };
