@@ -6,12 +6,18 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:25:02 by akuburas          #+#    #+#             */
-/*   Updated: 2024/12/12 01:28:03 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:31:03 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
+
+/**
+ * Converts a vector of integers into a space-separated string.
+ * @param vec The vector to convert.
+ * @return A string containing all vector elements concatenated with spaces.
+ */
 std::string vector_to_string(std::vector<int> vec)
 {
 	std::string return_string = std::to_string(vec[0]);
@@ -23,6 +29,12 @@ std::string vector_to_string(std::vector<int> vec)
 	return (return_string);
 }
 
+
+/**
+ * Converts a deque of integers into a space-separated string.
+ * @param deq The deque to convert.
+ * @return A string containing all deque elements concatenated with spaces.
+ */
 std::string deque_to_string(std::deque<int> deq)
 {
 	std::string return_string = std::to_string(deq[0]);
@@ -57,6 +69,13 @@ MergeInsert &MergeInsert::operator=(const MergeInsert &copy)
 	return (*this);
 }
 
+
+/**
+ * The start of the Algorithm. This first step is to convert the string into a vector.
+ * Converts a string of space-separated integers into a vector.
+ * @param original_string The string to convert.
+ * @return A vector containing all integers from the string. The integers are sorted.
+ */
 std::vector<int> MergeInsert::VectorAlgorithm(std::string original_string)
 {
 	if (_vector.size() > 0)
@@ -78,14 +97,22 @@ std::vector<int> MergeInsert::VectorAlgorithm(std::string original_string)
 	return (_vector);
 }
 
+
+/**
+ * The recursive part of the algorithm. This is where the magic happens.
+ * @param pair_size The size of the pairs to compare.
+ */
 void MergeInsert::VectorRecursive(int pair_size)
 {
+	/*We initially figure out how many "pairs" exist. In the first recursive loop each pair is well only 1 number large.
+	This means we just compare them 1 by 1. On later loops on it gets a bit more complicated.*/
 	int	pair_amount = _vector.size() / pair_size;
 	if (pair_amount < 2)
 		return;
 	bool is_odd = pair_amount % 2 == 1;
-
+	
 	vec_iter start = _vector.begin();
+	/*We find the end of the current pair chain. If the amount of pairs is odd we need to subtract the last pair size from the end.*/
 	vec_iter end = (FindNext(FindNext(_vector.begin(), pair_size * pair_amount), -(is_odd * pair_size)));
 	
 	VecSwapPair(start, end, pair_size);

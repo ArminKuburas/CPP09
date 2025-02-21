@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 12:36:31 by akuburas          #+#    #+#             */
-/*   Updated: 2025/02/19 14:56:12 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:35:50 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int main(int argc, char **argv)
 	std::cout << "Deque After: " << deque_to_string(sorted_deq) << std::endl;
 	clock_t deq_end = clock();
 	double elapsed_deq = static_cast<double>(deq_end - deq_start) / CLOCKS_PER_SEC;
-	std::cout << "VectorAlgorithm (Which users the std::vector container) took " << std::fixed << std::setprecision(6) << elapsed_vec << " seconds" << std::endl;
+	std::cout << "VectorAlgorithm (Which uses the std::vector container) took " << std::fixed << std::setprecision(6) << elapsed_vec << " seconds" << std::endl;
 	std::cout << "DequeAlgorithm (Which uses the std::deque container) took " << std::fixed << std::setprecision(6) << elapsed_deq << " seconds" << std::endl;
 	
 	return (0);

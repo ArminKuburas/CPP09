@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:09:29 by akuburas          #+#    #+#             */
-/*   Updated: 2024/12/12 01:26:59 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:25:57 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ template <typename T> bool _compare(T a, T b)
 	return (*a < *b);
 }
 
+/**
+ * Finds the next element in a container by an amount of "jumps"/moves it has to make forward or backwards.
+ * @param it The iterator to start from.
+ * @param amount_of_jumps The amount of jumps to make.
+ * @return The iterator pointing to the next element.
+ */
 template <typename T> T FindNext(T it, int amount_of_jumps)
 {
 	std::advance(it, amount_of_jumps);
