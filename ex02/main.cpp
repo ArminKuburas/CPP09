@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 12:36:31 by akuburas          #+#    #+#             */
-/*   Updated: 2025/02/21 11:35:50 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/03/05 02:12:14 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,8 @@ int main(int argc, char **argv)
 	clock_t deq_start = clock();
 	if (validate_input_deq(argc, argv) == false)
 		return (1);
+	//The algorithm is the same for both containers. The only difference is the container type.
+	//Deques differ from vectors in that they are optimized for push and pop operations.
 	std::deque<int> sorted_deq = sorter.DequeAlgorithm(argv_to_string(argc, argv));
 	std::cout << "Deque After: " << deque_to_string(sorted_deq) << std::endl;
 	clock_t deq_end = clock();
