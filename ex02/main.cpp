@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 12:36:31 by akuburas          #+#    #+#             */
-/*   Updated: 2025/03/05 02:12:14 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/03/05 10:29:17 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,12 @@ int main(int argc, char **argv)
 	if (validate_input_deq(argc, argv) == false)
 		return (1);
 	//The algorithm is the same for both containers. The only difference is the container type.
-	//Deques differ from vectors in that they are optimized for push and pop operations.
+	//Deques differ from vectors in the way they store data.
+	//Vectors store data in a continuous block of memory, while deques store data in a series of blocks.
+	//This means that deques are slower when accessing elements in the middle of the container,
+	//but faster when adding or removing elements from the front or back of the container.
+	//This does mean that with our style of this algorithm that vectors tend to be faster since once we have a vector container
+	//we don't need to add or remove elements from the front or back of the container. Until we merge  two vectors/deques together at a later state.
 	std::deque<int> sorted_deq = sorter.DequeAlgorithm(argv_to_string(argc, argv));
 	std::cout << "Deque After: " << deque_to_string(sorted_deq) << std::endl;
 	clock_t deq_end = clock();
