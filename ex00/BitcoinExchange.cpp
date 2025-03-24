@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:47 by akuburas          #+#    #+#             */
-/*   Updated: 2025/03/24 14:38:37 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:04:26 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ BitcoinExchange::BitcoinExchange(const std::string &databaseFile)
 
 void BitcoinExchange::loadDatabase(const std::string &databaseFile)
 {
+	std::string fileExtension = ".csv";
+	if (databaseFile.size() <= fileExtension.size() || databaseFile.substr(databaseFile.size() - fileExtension.size()) != fileExtension)
+	{
+    	throw std::runtime_error("Error: File is not a CSV");
+	}
+	
 	std:: ifstream file(databaseFile);
 	if (!file.is_open())
 		throw std::runtime_error("Error: Could not open file");
@@ -239,5 +245,17 @@ void BitcoinExchange::setDatabase(const std::string &databaseFile)
 
 bool BitcoinExchange::isDateBefore(const std::string &date) const
 {
+	if (_database.empty())
+		return (false);
+	std::string earliestDate = _database.begin()->first;
+	std::tm inputTm = {};
+	std::tm earliestTm = {};
+	std::istringstream inputSs(date);
+	std::istringstream earliestSs(earliestDate);
+	inputSs >> std::get_time(&inputTm, "%Y-%m-%d");
+	earliestSs >> std::get_time(&earliestTm, "%Y-%m-%d");
 	
+	std::time_t inputTime = std::mktime(&inputTm);
+	std::time_t earliestTime = std::mktime(&earliestTm);
+	return (inputTime < earliestTime);
 }
