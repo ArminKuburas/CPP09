@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:47 by akuburas          #+#    #+#             */
-/*   Updated: 2025/03/24 11:59:04 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:02:02 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,23 +129,24 @@ bool BitcoinExchange::isDateValid(const std::string &date) const
 	return (!result);
 }
 
-bool BitcoinExchange::isValueValid(const std::string &price) const
+bool BitcoinExchange::isValueValid(const std::string &amount) const
 {
-	if (price.empty())
+	if (amount.empty())
 		return (false);
 	bool dot_switch = false;
-	for (size_t i = 0; i < price.size(); i++)
+	
+	for (size_t i = 0; i < amount.size(); i++)
 	{
-		if (i == 0 && price[i] == '-')
+		if (i == 0 && amount[i] == '-')
 			continue;
-		if (price[i] == '.')
+		if (amount[i] == '.')
 		{
 			if (dot_switch)
 				return (false);
 			dot_switch = true;
 			continue;
 		}
-		if (price[i] < '0' || price[i] > '9')
+		if (amount[i] < '0' || amount[i] > '9')
 			return (false);
 	}
 	return (true);
@@ -191,7 +192,12 @@ void BitcoinExchange::processInput(const std::string &inputFile) const
 			std::cerr << "Error: not a positive number." << std::endl;
 			continue;
 		}
-		if (value > std::numeric_limits<int>::max())
+		/*Bitcoin is divisble to 8 decimal places. Fun fact This smallest unit is referred to as a satoshi*/
+		/*So thats 8 plus 4 since we can only go up to 1000 and plus 1 for the decimal point itself the .*/
+		/*So the biggest string you can input affectively should be something like 1000.00000000*/
+		/*Although I think floats can only go up to like 6-7 decimal points lol*/
+		/*A doubles precision is pretty huge though. So somewhat hard to overflow with all these checks and balances*/
+		if (value > 1000 || valueStr.size() > 13)
 		{
 			std::cerr << "Error: too large a number." << std::endl;
 			continue;
