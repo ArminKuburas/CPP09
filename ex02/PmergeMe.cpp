@@ -6,18 +6,12 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:25:02 by akuburas          #+#    #+#             */
-/*   Updated: 2025/03/04 11:53:50 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:13:22 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
-
-/**
- * Converts a vector of integers into a space-separated string.
- * @param vec The vector to convert.
- * @return A string containing all vector elements concatenated with spaces.
- */
 std::string vector_to_string(std::vector<int> vec)
 {
 	std::string return_string = std::to_string(vec[0]);
@@ -29,12 +23,6 @@ std::string vector_to_string(std::vector<int> vec)
 	return (return_string);
 }
 
-
-/**
- * Converts a deque of integers into a space-separated string.
- * @param deq The deque to convert.
- * @return A string containing all deque elements concatenated with spaces.
- */
 std::string deque_to_string(std::deque<int> deq)
 {
 	std::string return_string = std::to_string(deq[0]);
@@ -69,13 +57,6 @@ MergeInsert &MergeInsert::operator=(const MergeInsert &copy)
 	return (*this);
 }
 
-
-/**
- * The start of the Algorithm. This first step is to convert the string into a vector.
- * Converts a string of space-separated integers into a vector.
- * @param original_string The string to convert.
- * @return A vector containing all integers from the string. The integers are sorted.
- */
 std::vector<int> MergeInsert::VectorAlgorithm(std::string original_string)
 {
 	if (_vector.size() > 0)
@@ -97,33 +78,21 @@ std::vector<int> MergeInsert::VectorAlgorithm(std::string original_string)
 	return (_vector);
 }
 
-
-/**
- * The recursive part of the algorithm. This is where the magic happens.
- * @param pair_size The size of the pairs to compare.
- */
 void MergeInsert::VectorRecursive(int pair_size)
 {
-	/*We initially figure out how many "pairs" exist. In the first recursive loop each pair is well only 1 number large.
-	This means we just compare them 1 by 1. On later loops on it gets a bit more complicated.*/
 	int	pair_amount = _vector.size() / pair_size;
 	if (pair_amount < 2)
 		return;
 	bool is_odd = pair_amount % 2 == 1;
-	
+
 	vec_iter start = _vector.begin();
-	/*We find the end of the current pair chain. If the amount of pairs is odd we need to subtract the last pair from the end.*/
 	vec_iter end = (FindNext(FindNext(_vector.begin(), pair_size * pair_amount), -(is_odd * pair_size)));
 	
 	VecSwapPair(start, end, pair_size);
-	//We recursively call the function with the pair size multiplied by 2.
 	VectorRecursive(pair_size * 2);
-	//As a reminder we reach this point first with the pair size of 1.
-	//We create two chains. One for the main chain and one for the pending insertions.
 	std::vector<vec_iter> pending_insertion_chain;
 	std::vector<vec_iter> main_chain;
 
-	//We insert the first two pairs into the main chain.
 	main_chain.insert(main_chain.end(), FindNext(_vector.begin(), pair_size - 1));
 	main_chain.insert(main_chain.end(), FindNext(_vector.begin(), pair_size * 2 - 1));
 	VecChainingTime(main_chain, pending_insertion_chain, pair_size, pair_amount);
@@ -165,49 +134,27 @@ void MergeInsert::VectorRecursive(int pair_size)
 	}
 }
 
-/**
- * This function is meant to chain the pending insertions into the main chain.
- * @param main_chain The main chain.
- * @param pending_insertion_chain The pending insertions.
- * @param pair_size The size of the pairs.
- * @param pair_amount The amount of pairs.
- * @return void
- */
 void MergeInsert::VecChainingTime(std::vector<vec_iter> & main_chain, std::vector<vec_iter> & pending_insertion_chain, int pair_size, int pair_amount)
 {
-	//We start at the 4th pair and go up by 2 pairs each time.
-	//Small enough chains skip this part.
 	for (int i = 4; i <= pair_amount; i += 2)
 	{
 		pending_insertion_chain.insert(pending_insertion_chain.end(), FindNext(this->_vector.begin(), pair_size * (i - 1) - 1));
 		main_chain.insert(main_chain.end(), FindNext(_vector.begin(), pair_size * i - 1));
 	}
-	//We need to know the Jacobsthal number for the current pair size.
-	//This number tells us the order in which we will binary insert the pending numbers into the main chain.
 	int jacobsthal_prev = JacobsthalNumber(0);
-	//We keep track of how many numbers we have inserted.
 	int inserted_amount = 0;
-	//The loop has no ending condition. It will break when the Jacobsthal difference is larger than the pending insertion chain.
 	for (int n = 1;; n++)
 	{
 		int jacobsthal_current = JacobsthalNumber(n);
 		int jacobsthal_diff = jacobsthal_current - jacobsthal_prev;
 		int offset = 0;
-		//If the Jacobsthal difference is larger than the pending insertion chain we break the loop.
-		//Again if the chain is too small we never really do this part.
 		if (jacobsthal_diff > static_cast<int>(pending_insertion_chain.size()))
 			break;
-		//We need to know how many numbers we will insert.
 		int number_of_insertions = jacobsthal_diff;
-		//We need to know where the pending insertion chain is and where the main chain is.
 		std::vector<vec_iter>::iterator it_pend = FindNext(pending_insertion_chain.begin(), jacobsthal_diff - 1);
 		std::vector<vec_iter>::iterator it_main = FindNext(main_chain.begin(), jacobsthal_current + inserted_amount);
 		while (number_of_insertions > 0)
 		{
-			//We find the place where we will insert the number.
-			//We insert the number and remove it from the pending insertion chain.
-			//We also need to adjust the iterators.
-			//Upper bound is used to find the first element that is larger than the number we want to insert. It uses binary search.
 			std::vector<vec_iter>::iterator where_to_insert = std::upper_bound(main_chain.begin(), it_main, *it_pend, _compare<vec_iter>);
 			std::vector<vec_iter>::iterator inserted = main_chain.insert(where_to_insert, *it_pend);
 			number_of_insertions--;
@@ -221,18 +168,9 @@ void MergeInsert::VecChainingTime(std::vector<vec_iter> & main_chain, std::vecto
 	}
 }
 
-/**
- * This function is used to swap pairs of numbers in the vector.
- * @param start The start of the vector.
- * @param end The end of the vector.
- * @param pair_size The size of the pairs to swap.
- */
 void MergeInsert::VecSwapPair(vec_iter start, vec_iter end, int pair_size)
 {
 	int jump_forward = pair_size * 2;
-	//We start at the beginning of the vector and jump forward by 2 * pair_size.
-	//This is because we want to compare pairs of numbers.
-	//If the first number of the first pair is larger than the first number of the second pair we swap the pairs.
 	for (vec_iter it = start; it != end; std::advance(it, jump_forward))
 	{
 		vec_iter this_pair = FindNext(it, pair_size - 1);
@@ -391,12 +329,6 @@ void MergeInsert::DeqChainingTime(std::deque<deq_iter> & main_chain, std::deque<
  * So why do we even need this stinky binky number?
  * It tells us the order in which we will binary insert the pending numbers into the main chain.
  */
-
- /**
-  * This function is used to calculate the Jacobsthal number.
-  * @param n The number to calculate the Jacobsthal number for.
-  * @return The Jacobsthal number.
-  */
 int MergeInsert::JacobsthalNumber(int n)
 {
 	int jacobsthal_number = round((pow(2, n + 2) - pow(-1, n + 2)) / 3);

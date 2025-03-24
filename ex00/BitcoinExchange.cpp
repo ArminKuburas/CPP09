@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:47 by akuburas          #+#    #+#             */
-/*   Updated: 2025/01/20 14:42:11 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/03/24 11:59:04 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 BitcoinExchange::BitcoinExchange(const std::string &databaseFile)
 {
+	_monthLengths = { {1, 31}, {2, 28}, {3, 31}, {4, 30}, {5, 31}, {6, 30}, {7, 31}, {8, 31}, {9, 30}, {10, 31}, {11, 30}, {12, 31} };
 	loadDatabase(databaseFile);
 }
 
@@ -113,6 +114,10 @@ bool BitcoinExchange::isDateValid(const std::string &date) const
 		if ((year % 4 != 0) || (year % 100 == 0 && year % 400 != 0))
 			return false;
     }
+	else if (tm.tm_mday > _monthLengths.at(tm.tm_mon + 1))
+	{
+		return (false);
+	}
 	tm.tm_isdst = -1;
 	std::time_t t = std::mktime(&tm);
 	if (t == -1)

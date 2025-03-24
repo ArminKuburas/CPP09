@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:49 by akuburas          #+#    #+#             */
-/*   Updated: 2025/02/19 14:17:39 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/03/24 11:40:46 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ class BitcoinExchange
 		
 	private:
 		std::map<std::string, double> _database;
+		std::map<int, int> _monthLengths;
 	
 		void checkLine(const std::string &line) const;
 		void loadDatabase(const std::string &databaseFile);
