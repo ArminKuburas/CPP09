@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:47 by akuburas          #+#    #+#             */
-/*   Updated: 2025/03/24 14:02:02 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:38:37 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ void BitcoinExchange::processInput(const std::string &inputFile) const
 			std::cerr << "Error: bad input => " << line << std::endl;
 			continue;
 		}
-		if (!isDateValid(date))
+		if (!isDateValid(date) || isDateBefore(date))
 		{
 			std::cerr << "Error: bad date input => " << date << std::endl;
 			continue;
@@ -235,4 +235,9 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other)
 void BitcoinExchange::setDatabase(const std::string &databaseFile)
 {
 	loadDatabase(databaseFile);
+}
+
+bool BitcoinExchange::isDateBefore(const std::string &date) const
+{
+	
 }
