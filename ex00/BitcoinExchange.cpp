@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:47 by akuburas          #+#    #+#             */
-/*   Updated: 2025/03/26 16:26:07 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:30:11 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ void BitcoinExchange::processInput(const std::string &inputFile) const
 			continue;
 		}
 		double value = std::stod(valueStr);
-		if (value < 0)
+		if (value < 0 || valueStr[0] == '-')
 		{
 			std::cerr << "Error: not a positive number." << std::endl;
 			continue;
