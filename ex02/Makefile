@@ -6,12 +6,12 @@
 #    By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/09 12:43:32 by akuburas          #+#    #+#              #
-#    Updated: 2024/12/09 12:44:43 by akuburas         ###   ########.fr        #
+#    Updated: 2025/03/28 03:01:49 by akuburas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 C++ = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++11 -g
+CFLAGS = -Wall -Wextra -Werror -std=c++11
 
 NAME = PmergeMe
 

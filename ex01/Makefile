@@ -6,12 +6,12 @@
 #    By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/03 11:51:21 by akuburas          #+#    #+#              #
-#    Updated: 2024/11/03 11:52:09 by akuburas         ###   ########.fr        #
+#    Updated: 2025/03/28 03:01:46 by akuburas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 C++ = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++11 -g
+CFLAGS = -Wall -Wextra -Werror -std=c++11
 
 NAME = RPN
 
