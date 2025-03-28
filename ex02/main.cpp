@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 12:36:31 by akuburas          #+#    #+#             */
-/*   Updated: 2025/03/28 02:54:34 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/03/28 03:16:01 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,10 @@ int main(int argc, char **argv)
 	}
 	catch (std::exception &e)
 	{
-		std::cerr << "An error occurred: " << e.what() << std::endl;
+		if (std::string(e.what()) == "stoi")
+			std::cerr << "Invalid Input: Conversion of token into integer failed" << std::endl;
+		else
+			std::cerr << "An error occurred: " << e.what() << std::endl;
 	}
 	return (0);
 }

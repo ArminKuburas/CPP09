@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:47 by akuburas          #+#    #+#             */
-/*   Updated: 2025/03/26 16:30:11 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/03/28 03:13:57 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ double BitcoinExchange::findClosestPrice(const std::string &date) const
 	if (it == _database.end() || it->first != date)
 	{
 		if (it == _database.begin())
-			return (0.0);
+			return (it->second);
 		--it;
 	}
 	return (it->second);
