@@ -7,7 +7,7 @@ def is_sorted(numbers):
 def main():
 	num_elements = int(input("How many elements do you want to sort? "))
 
-	numbers = random.sample(range(1, 10001), num_elements)
+	numbers = random.sample(range(1, num_elements + 1), num_elements)
 	print(f"Unsorted list: {numbers}")
 	command = ["./PmergeMe"]  + list(map(str, numbers))
 	result = subprocess.run(command, capture_output=True, text=True)
