@@ -6,12 +6,12 @@
 #    By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 11:43:02 by akuburas          #+#    #+#              #
-#    Updated: 2025/03/28 03:01:56 by akuburas         ###   ########.fr        #
+#    Updated: 2025/03/31 12:58:50 by akuburas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 C++ = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++11
+CFLAGS = -Wall -Wextra -Werror -std=c++17
 
 NAME = btc
 

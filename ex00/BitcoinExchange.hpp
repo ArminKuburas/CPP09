@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:49 by akuburas          #+#    #+#             */
-/*   Updated: 2025/03/24 14:38:04 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:59:53 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <iomanip>
 #include <limits>
 #include <ctime>
+#include <filesystem>
 
 class BitcoinExchange
 {

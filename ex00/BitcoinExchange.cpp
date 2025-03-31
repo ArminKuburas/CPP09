@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:47 by akuburas          #+#    #+#             */
-/*   Updated: 2025/03/31 12:43:38 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/03/31 13:02:43 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ void BitcoinExchange::loadDatabase(const std::string &databaseFile)
 	{
     	throw std::runtime_error("Error: File is not a CSV");
 	}
-	
 	std:: ifstream file(databaseFile);
-	if (!file.is_open())
+	if (!file.is_open() || !std::filesystem::is_regular_file(databaseFile))
 		throw std::runtime_error("Error: Could not open file");
 	std::string line;
 	std::getline(file, line);
@@ -165,6 +164,8 @@ void BitcoinExchange::processInput(const std::string &inputFile) const
 	std::ifstream file(inputFile);
 	if (!file.is_open())
 		throw std::runtime_error("Error: Could not open file");
+	if (!std::filesystem::is_regular_file(inputFile))
+		throw (std::runtime_error("Error: Input file is not a regular file"));
 	std::string line;
 	std::getline(file, line);
 	if (line != "date | value")

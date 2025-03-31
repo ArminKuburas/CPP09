@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:52 by akuburas          #+#    #+#             */
-/*   Updated: 2025/03/28 03:15:36 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/03/31 13:03:45 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ int	main(int argc, char **argv)
 {
 	if (argc != 2)
 	{
-		std::cerr << "Error: could not open file." << std::endl;
+		if (argc > 2)
+			std::cerr << "Error: Too many arguments" << std::endl;
+		else
+			std::cerr << "Error: could not open file." << std::endl;
 		return (1);
 	}
 	try
