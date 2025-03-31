@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:24:47 by akuburas          #+#    #+#             */
-/*   Updated: 2025/03/28 03:13:57 by akuburas         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:43:38 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ double BitcoinExchange::findClosestPrice(const std::string &date) const
 	std::map<std::string, double>::const_iterator it = _database.lower_bound(date);
 	if (it == _database.end() || it->first != date)
 	{
-		if (it == _database.begin())
-			return (it->second);
 		--it;
 	}
 	return (it->second);
@@ -143,7 +141,7 @@ bool BitcoinExchange::isValueValid(const std::string &amount) const
 	
 	for (size_t i = 0; i < amount.size(); i++)
 	{
-		if (i == 0 && amount[i] == '-')
+		if (i == 0 && (amount[i] == '-' || amount[i] == '+'))
 			continue;
 		if (amount[i] == '.')
 		{
@@ -177,7 +175,7 @@ void BitcoinExchange::processInput(const std::string &inputFile) const
 		std::string date;
 		std::string pipe;
 		std::string valueStr;
-		if (!(ss >> date >> pipe >> valueStr) || pipe != "|" )
+		if (!(ss >> date >> pipe >> valueStr) || pipe != "|" || !(ss >> std::ws).eof())
 		{
 			std::cerr << "Error: bad input => " << line << std::endl;
 			continue;
